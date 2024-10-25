@@ -11,6 +11,9 @@ Here’s a next-level **README.md** file for your project, packed with icons, em
 
 Welcome to the **Vehicle Detection & Tracking System**! This project uses cutting-edge **YOLOv8 segmentation** 🧠 for **real-time vehicle detection** 🚗🚚 from video streams, and leverages **Flask** for a smooth web interface 🖥️.
 
+![s](https://github.com/user-attachments/assets/b81b13e4-9876-42a4-a5b7-1041f9e8a9a0)
+
+
 ## 🚀 **Key Features**
 - **Real-Time Detection**: Detects vehicles in videos and marks them with bounding boxes 🎯.
 - **Segmentation**: Advanced segmentation of vehicles using YOLOv8 🚀.
@@ -18,6 +21,7 @@ Welcome to the **Vehicle Detection & Tracking System**! This project uses cuttin
 - **Cropping & Saving**: Saves detected vehicles as images for further analysis 🖼️.
 - **Flask Web Interface**: Easily upload videos via the web UI 🌐.
 - **Customizable**: Adjust margins, upper detection limits, and stop detection dynamically 🛠️.
+
 
 ## 📂 **Project Structure**
 
@@ -79,7 +83,7 @@ Welcome to the **Vehicle Detection & Tracking System**! This project uses cuttin
 
 Here’s how the vehicle detection works in action! 🎬👇
 
-![Vehicle Detection](https://user-images.githubusercontent.com/demo.gif)
+👉 Check out our gameplay video here: [Vehicle detection](https://www.loom.com/share/f7a05e23a14e4c39a178655d8c3bc6bd?sid=def5a433-aebc-4ebd-a2f0-8697ad2da51d)
 
 ## 📜 **API Endpoints**
 
@@ -103,7 +107,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 Let's connect on social media 🌐:
 
 
-[![GitHub](https://img.shields.io/badge/GitHub-Follow-lightgrey)](https://github.com/YourUsername)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-lightgrey)](https://github.com/ZubairZubii)
 [![Twitter](https://img.shields.io/badge/Twitter-Follow-blue)](https://twitter.com/yourhandle)
 
 ---

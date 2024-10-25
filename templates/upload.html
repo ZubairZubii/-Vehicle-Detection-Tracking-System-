@@ -1,0 +1,300 @@
+<!-- <!-- <!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Masking Code</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Upload and Process Video</h1>
+    <form id="upload-form" enctype="multipart/form-data">
+        <label for="file">Choose video file:</label>
+        <input type="file" id="file" name="file">
+        <br><br>
+        <label for="margin">Set Margin:</label>
+        <input type="number" id="margin" name="margin" value="50">
+        <br><br>
+        <input type="submit" value="Upload">
+    </form>
+    <br>
+    <button id="stop-btn">Stop Processing</button>
+
+    <script>
+        $(document).ready(function () {
+            $('#upload-form').submit(function (e) {
+                e.preventDefault();
+                var formData = new FormData(this);
+                $.ajax({
+                    url: '/upload',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        var filePath = data.file_path;
+                        var margin = $('#margin').val();
+                        $.post('/process', { file_path: filePath, margin: margin }, function (result) {
+                            alert(result);
+                        });
+                    }
+                });
+            });
+
+            $('#margin').change(function () {
+                var margin = $(this).val();
+                $.post('/update_margin', { margin: margin }, function (result) {
+                    console.log(result);
+                });
+            });
+
+            $('#stop-btn').click(function () {
+                $.post('/stop', function (result) {
+                    alert(result);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+ -->
+
+
+
+
+
+
+
+
+
+
+
+ <!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Vehicle Masking System</title>
+     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+     <style>
+         * {
+             box-sizing: border-box;
+             margin: 0;
+             padding: 0;
+         }
+ 
+         body {
+             font-family: 'Poppins', sans-serif;
+             background-color: #f0f2f5;
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             height: 100vh;
+             padding: 20px;
+             background-image: url('/static/signal.jpg');
+             background-size: cover;
+             background-position: center;
+         }
+ 
+         .overlay {
+             background-color: rgba(0, 0, 0, 0.6);
+             position: absolute;
+             top: 0;
+             left: 0;
+             width: 100%;
+             height: 100%;
+         }
+ 
+         .container {
+             background-color: #ffffff;
+             padding: 40px;
+             border-radius: 12px;
+             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+             max-width: 480px;
+             width: 100%;
+             text-align: center;
+             position: relative;
+             z-index: 2;
+             transition: transform 0.3s ease, box-shadow 0.3s ease;
+         }
+ 
+         .container:hover {
+             transform: translateY(-10px);
+             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+         }
+ 
+         h1 {
+             font-size: 28px;
+             color: #333;
+             margin-bottom: 30px;
+             font-weight: 600;
+         }
+ 
+         label {
+             font-weight: 600;
+             text-align: left;
+             margin-bottom: 5px;
+             display: block;
+             color: #555;
+             margin-top: 15px;
+         }
+ 
+         input[type="file"] {
+             display: none;
+         }
+ 
+         .custom-file-upload {
+             background-color: #5a67d8;
+             color: white;
+             padding: 10px 15px;
+             border-radius: 8px;
+             cursor: pointer;
+             display: inline-block;
+             margin-bottom: 20px;
+             transition: background-color 0.3s ease;
+         }
+ 
+         .custom-file-upload:hover {
+             background-color: #434190;
+         }
+ 
+         input[type="number"] {
+             width: 100%;
+             padding: 12px;
+             margin-top: 8px;
+             margin-bottom: 15px;
+             border: 1px solid #ddd;
+             border-radius: 8px;
+             font-size: 14px;
+             color: #333;
+         }
+ 
+         input[type="submit"],
+         #stop-btn {
+             background-color: #5a67d8;
+             color: white;
+             border: none;
+             padding: 12px 20px;
+             border-radius: 8px;
+             font-size: 16px;
+             cursor: pointer;
+             transition: background-color 0.3s ease;
+             margin-top: 10px;
+             width: 100%;
+         }
+ 
+         input[type="submit"]:hover,
+         #stop-btn:hover {
+             background-color: #434190;
+         }
+ 
+         #stop-btn {
+             background-color: #e53e3e;
+             margin-top: 20px;
+         }
+ 
+         #stop-btn:hover {
+             background-color: #c53030;
+         }
+ 
+         .form-group {
+             text-align: left;
+             margin-bottom: 20px;
+         }
+ 
+         #file-chosen {
+             margin-top: 8px;
+             font-size: 14px;
+             color: #333;
+         }
+ 
+         @media (max-width: 600px) {
+             .container {
+                 padding: 30px;
+             }
+ 
+             h1 {
+                 font-size: 22px;
+             }
+         }
+     </style>
+ </head>
+ 
+ <body>
+     <div class="overlay"></div>
+     <div class="container">
+         <h1>Upload and Process Video</h1>
+         <form id="upload-form" enctype="multipart/form-data">
+             <div class="form-group">
+                 <label for="file" class="custom-file-upload">
+                     Choose Video File
+                 </label>
+                 <input type="file" id="file" name="file" accept="video/*">
+                 <span id="file-chosen">No file chosen</span>
+             </div>
+ 
+             <div class="form-group">
+                 <label for="margin">Set Margin:</label>
+                 <input type="number" id="margin" name="margin" value="50" placeholder="Enter margin value">
+             </div>
+ 
+             <div class="form-group">
+                 <label for="y_upper_factor">Set Upper Line Factor:</label>
+                 <input type="number" step="0.01" id="y_upper_factor" name="y_upper_factor" value="0.5" placeholder="Enter upper line factor">
+             </div>
+ 
+             <input type="submit" value="Upload Video">
+         </form>
+ 
+         <button id="stop-btn">Stop Processing</button>
+     </div>
+ 
+     <script>
+         $(document).ready(function () {
+             $('#upload-form').submit(function (e) {
+                 e.preventDefault();
+                 var formData = new FormData(this);
+                 $.ajax({
+                     url: '/upload',
+                     type: 'POST',
+                     data: formData,
+                     processData: false,
+                     contentType: false,
+                     success: function (data) {
+                         var filePath = data.file_path;
+                         var margin = $('#margin').val();
+                         var yUpperFactor = $('#y_upper_factor').val();
+                         $.post('/process', { file_path: filePath, margin: margin, y_upper_factor: yUpperFactor }, function (result) {
+                             alert(result);
+                         });
+                     }
+                 });
+             });
+ 
+             $('#margin').change(function () {
+                 var margin = $(this).val();
+                 $.post('/update_margin', { margin: margin }, function (result) {
+                     console.log(result);
+                 });
+             });
+ 
+             $('#file').change(function () {
+                 var fileName = $(this).val().split('\\').pop();
+                 $('#file-chosen').text(fileName || "No file chosen");
+             });
+ 
+             $('#stop-btn').click(function () {
+                 $.post('/stop', function (result) {
+                     alert(result);
+                 });
+             });
+         });
+     </script>
+ </body>
+ 
+ </html>
+ 
